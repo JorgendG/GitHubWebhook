@@ -56,7 +56,7 @@ While ($HttpListener.IsListening) {
         Write-Output "Files added:"
         $whevent[0].head_commit.added
         
-        #Write-Output $decodedpayload
+        # Write-Output $decodedpayload
     }
     $HttpResponse = $HttpContext.Response
     $HttpResponse.Headers.Add("Content-Type", "text/plain")
