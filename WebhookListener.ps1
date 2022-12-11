@@ -88,7 +88,6 @@ While ($HttpListener.IsListening) {
     if ( (Test-Path C:\pullserver\HomelabConfig\credpwd.txt) -and (Test-Path C:\pullserver\HomelabConfig\credusr.txt) ) {
         if ( $getMakeDSCConfigps1 -or $getMakeDSCConfigpsd1 ) {
             Write-Output "Start MakeDSCConfig" $((get-date).ToLocalTime()).ToString("yyyy-MM-dd HHmmss")
-            #& C:\Pullserver\MakeDSCConfig.ps1
             #& "$updateaction"
             Write-Output "Einde MakeDSCConfig" $((get-date).ToLocalTime()).ToString("yyyy-MM-dd HHmmss")
         }
