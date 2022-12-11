@@ -3,18 +3,9 @@ param (
     [string]$sourcerepo = 'https://github.com/JorgendG/GitHubWebhook/raw/master',    
     [string]$destFolder = 'C:\Pullserver',
     [string]$updateaction = 'C:\Pullserver\GitHubWebhook.ps1',
-    [switch]$Install = $false
+    [switch]$Install = $false,
+    [string[]]$filestowatch = "GitHubWebhook"
 )
-<#
-    # Heb credentials nodig om logon voor service in te stellen
-    $credpwd = Get-Content c:\Windows\Temp\credpwd.txt | ConvertTo-SecureString
-    $usr = Get-Content c:\Windows\Temp\credusr.txt
-    $credential = New-Object System.Management.Automation.PsCredential($usr, $credpwd)
-    $usr
-    $credential.Password
-
-    $credential.Password | Out-File C:\pullserver\dinges.txt
-#>
 
 function Install-WebhookService {
     param (
@@ -40,8 +31,6 @@ $HttpListener.Prefixes.Add('http://+:' + $portNumber + '/')
 
 $HttpListener.Start()
 While ($HttpListener.IsListening) {
-    $getMakeDSCConfigps1 = $false
-    $getMakeDSCConfigpsd1 = $false
 
     $HttpContext = $HttpListener.GetContext()
     $HttpRequest = $HttpContext.Request
