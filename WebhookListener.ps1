@@ -1,8 +1,8 @@
 param (
     [string]$portNumber = 1234, 
-    [string]$sourcerepo = 'https://github.com/JorgendG/BuildWDS/raw/master',    
+    [string]$sourcerepo = 'https://github.com/JorgendG/GitHubWebhook/raw/master',    
     [string]$destFolder = 'C:\Pullserver',
-    [string]$updateaction = 'C:\Pullserver\MakeDSCConfig.ps1',
+    [string]$updateaction = 'C:\Pullserver\GitHubWebhook.ps1',
     [switch]$Install = $false
 )
 <#
@@ -89,7 +89,7 @@ While ($HttpListener.IsListening) {
         if ( $getMakeDSCConfigps1 -or $getMakeDSCConfigpsd1 ) {
             Write-Output "Start MakeDSCConfig" $((get-date).ToLocalTime()).ToString("yyyy-MM-dd HHmmss")
             #& C:\Pullserver\MakeDSCConfig.ps1
-            & "$updateaction"
+            #& "$updateaction"
             Write-Output "Einde MakeDSCConfig" $((get-date).ToLocalTime()).ToString("yyyy-MM-dd HHmmss")
         }
     }
