@@ -65,7 +65,7 @@ While ($HttpListener.IsListening) {
     $HttpResponse.ContentLength64 = $ResponseBuffer.Length
     $HttpResponse.OutputStream.Write($ResponseBuffer, 0, $ResponseBuffer.Length)
     $HttpResponse.Close()
-    Write-Output "" # Newline
+    Write-Output " " # Newline
     #$HttpListener.Stop()
     if ( $getMakeDSCConfigps1 ) {
         Invoke-WebRequest -Uri "$sourcerepo/MakeDSCConfig.ps1" -OutFile "$destFolder\MakeDSCConfig.ps1"
