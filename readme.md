@@ -32,7 +32,7 @@ param (
 )
 ```
 
-The $sourcerepo should be replaced by a $branch parameter. The link to the repository is somewhere part of the webhook data. Should be fixed soon.
+The $sourcerepo is a link to the repository. It is also somewhere part of the webhook data but I don't want to use that unless I'm 100% sure the request came from Github. Don't want to download files from a source solely based on a unverified http request.
 
 The $updateaction parameter is the name of a powershell script which is executed after certain files have changed.
 

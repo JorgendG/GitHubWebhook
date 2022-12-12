@@ -4,7 +4,7 @@ param (
     [string]$destFolder = 'C:\Pullserver',
     [string]$updateaction = 'C:\Pullserver\GitHubWebhook.ps1',
     [switch]$Install = $false,
-    [string[]]$filestowatch = "GitHubWebhook"
+    [string[]]$filestowatch = @("WebhookListener.ps1", "readme.md")
 )
 
 function Install-WebhookService {
@@ -47,16 +47,16 @@ While ($HttpListener.IsListening) {
 
         Write-Output "Files modified:"
         $whevent[0].head_commit.modified
-        if ( 'MakeDSCConfig.ps1' -in $whevent[0].head_commit.modified ) {
-            $getMakeDSCConfigps1 = $true
-        }
-        if ( 'MakeDSCConfig.psd1' -in $whevent[0].head_commit.modified ) {
-            $getMakeDSCConfigpsd1 = $true
-        }
+       
         Write-Output "Files added:"
         $whevent[0].head_commit.added
         
-        # Write-Output $decodedpayload
+        foreach ( $filename in $filestowatch) {
+            if ( $filename -in $whevent[0].head_commit.modified ) {
+                Invoke-WebRequest -Uri "$sourcerepo/$filename" -OutFile "$destFolder\$filename"
+            }
+        }
+     
     }
     $HttpResponse = $HttpContext.Response
     $HttpResponse.Headers.Add("Content-Type", "text/plain")
