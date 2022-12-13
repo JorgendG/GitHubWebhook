@@ -70,16 +70,13 @@ While ($HttpListener.IsListening) {
     $HttpResponse.OutputStream.Write($ResponseBuffer, 0, $ResponseBuffer.Length)
     $HttpResponse.Close()
     Write-Output " " # Newline
-    #$HttpListener.Stop()
-    if ( $getMakeDSCConfigps1 ) {
-        Invoke-WebRequest -Uri "$sourcerepo/MakeDSCConfig.ps1" -OutFile "$destFolder\MakeDSCConfig.ps1"
-    }
-    if ( $getMakeDSCConfigpsd1 ) {
-        Invoke-WebRequest -Uri "$sourcerepo/MakeDSCConfig.psd1" -OutFile "$destFolder\MakeDSCConfig.psd1"
-    }
+    
+    
     # execute updateaction
     Write-Output "Start updateaction" $((get-date).ToLocalTime()).ToString("yyyy-MM-dd HHmmss")
     # & "$updateaction"
     Write-Output "Ended updateaction" $((get-date).ToLocalTime()).ToString("yyyy-MM-dd HHmmss")
+    # $HttpListener.Stop()
+    # uncomment incase you want to inspect varianbles
 }
 $HttpListener.Stop()
