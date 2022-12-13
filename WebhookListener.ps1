@@ -44,6 +44,8 @@ While ($HttpListener.IsListening) {
         $whevent = $whevent + "]"
 
         $whevent = ConvertFrom-Json $whevent
+        # $whevent | ConvertTo-Json -depth 100 | Out-File C:\location\whevent.json
+        # uncomment to save the eventdata to a json file, vscode offers a nice way to inspect the content
 
         Write-Output "Files modified:"
         $whevent[0].head_commit.modified
