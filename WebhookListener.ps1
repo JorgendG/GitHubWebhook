@@ -77,13 +77,9 @@ While ($HttpListener.IsListening) {
     if ( $getMakeDSCConfigpsd1 ) {
         Invoke-WebRequest -Uri "$sourcerepo/MakeDSCConfig.psd1" -OutFile "$destFolder\MakeDSCConfig.psd1"
     }
-    # trap makeconfig af
-    if ( (Test-Path C:\pullserver\HomelabConfig\credpwd.txt) -and (Test-Path C:\pullserver\HomelabConfig\credusr.txt) ) {
-        if ( $getMakeDSCConfigps1 -or $getMakeDSCConfigpsd1 ) {
-            Write-Output "Start MakeDSCConfig" $((get-date).ToLocalTime()).ToString("yyyy-MM-dd HHmmss")
-            #& "$updateaction"
-            Write-Output "Einde MakeDSCConfig" $((get-date).ToLocalTime()).ToString("yyyy-MM-dd HHmmss")
-        }
-    }
+    # execute updateaction
+    Write-Output "Start updateaction" $((get-date).ToLocalTime()).ToString("yyyy-MM-dd HHmmss")
+    # & "$updateaction"
+    Write-Output "Ended updateaction" $((get-date).ToLocalTime()).ToString("yyyy-MM-dd HHmmss")
 }
 $HttpListener.Stop()

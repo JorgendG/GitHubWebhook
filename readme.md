@@ -18,6 +18,7 @@ Add a webhook in the settings tab of a repository. For the time being, set conte
 ![Image of a WebHook](/images/createwebhook.png)
 I just use my public ipaddress and use portforwarding in my router.
 ![Image of a WebHook](/images/portforwarder.png)
+**_ Do remember you're poking holes in your firewall. I got numerous hits, http request on this sorta random port_**
 
 # Listener
 
@@ -29,7 +30,8 @@ param (
     [string]$sourcerepo = 'https://github.com/JorgendG/BuildWDS/raw/master',
     [string]$destFolder = 'C:\Pullserver',
     [string]$updateaction = 'C:\Pullserver\MakeDSCConfig.ps1',
-    [switch]$Install = $false
+    [switch]$Install = $false,
+    [string[]]$filestowatch = @("WebhookListener.ps1", "readme.md")
 )
 ```
 
@@ -60,6 +62,8 @@ While ($HttpListener.IsListening) {
         $whevent = $whevent + "]"
 
         $whevent = ConvertFrom-Json $whevent
+        # $whevent | ConvertTo-Json -depth 100 | Out-File C:\location\whevent.json
+        # uncomment to save the payload to a json file, vscode offers a nice way to inspect the content
 
         Write-Output "Files modified:"
         $whevent[0].head_commit.modified
@@ -79,4 +83,10 @@ While ($HttpListener.IsListening) {
 $HttpListener.Stop()
 ```
 
-It creates a httplistener on port $portnumber and prints the mofied or added files in a push event.
+It creates a httplistener on port $portnumber and prints the modified or added files in a push event.
+
+To check out the properties of a request, force a stop of the listener. If you run the fragment from an powershell console or ide, the interesting variables will still be present.
+
+```powershell
+
+```
