@@ -13,7 +13,8 @@ It starts a http listener and perfoms actions when it receives the a request. Th
 
 # Setup webhook
 
-Add a webhook in the settings tab of a repository.
+Add a webhook in the settings tab of a repository. For the time being, set content type to application/x-www-form-urlencoded.
+
 ![Image of a WebHook](/images/createwebhook.png)
 I just use my public ipaddress and use portforwarding in my router.
 ![Image of a WebHook](/images/portforwarder.png)
