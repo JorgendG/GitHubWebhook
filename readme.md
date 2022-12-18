@@ -46,6 +46,7 @@ A minimal version looks like this
 ```powershell
 Add-Type -AssemblyName System.Web
 
+$portNumber = 1234
 $HttpListener = New-Object System.Net.HttpListener
 $HttpListener.Prefixes.Add('http://+:' + $portNumber + '/')
 
@@ -84,6 +85,8 @@ $HttpListener.Stop()
 ```
 
 It creates a httplistener on port $portnumber and prints the modified or added files in a push event.
+
+This example will execute the $updateaction script on every hit. Not just a GitHub push event but also portscanners or other probes.
 
 To check out the properties of a request, force a stop of the listener. If you run the fragment from an powershell console or ide, the interesting variables will still be present.
 

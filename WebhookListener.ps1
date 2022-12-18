@@ -35,7 +35,9 @@ While ($HttpListener.IsListening) {
     $HttpContext = $HttpListener.GetContext()
     $HttpRequest = $HttpContext.Request
     $RequestUrl = $HttpRequest.Url.OriginalString
-    Write-Output "$RequestUrl"
+    Write-Output "RequestUrl      : $RequestUrl"
+    Write-Output "X-Forwarded-For : $($HttpRequest.Headers['X-Forwarded-For'])"
+    Write-Output "UserAgent       : $($HttpRequest.Headers['UserAgent'])"
     if ($HttpRequest.HasEntityBody) {
         $Reader = New-Object System.IO.StreamReader($HttpRequest.InputStream)
         $bla = $Reader.ReadToEnd()
@@ -52,15 +54,15 @@ While ($HttpListener.IsListening) {
        
         Write-Output "Files added:"
         $whevent[0].head_commit.added
-        
+        $filemodified = $false
         foreach ( $filename in $filestowatch) {
             if ( $filename -in $whevent[0].head_commit.modified ) {
-                Write-Output "DateTime: $((get-date).ToLocalTime()).ToString('yyyy-MM-dd HHmmss')"
-                Write-Output "Download file: $$sourcerepo/$filename" $((get-date).ToLocalTime()).ToString("yyyy-MM-dd HHmmss")
+                Write-Output "DateTime      : $($((get-date).ToLocalTime()).ToString('yyyy-MM-dd HHmmss'))"
+                Write-Output "Download file : $($sourcerepo/$filename) $((get-date).ToLocalTime()).ToString("yyyy-MM-dd HHmmss"))"
                 Invoke-WebRequest -Uri "$sourcerepo/$filename" -OutFile "$destFolder\$filename"
+                $filemodified = $true
             }
         }
-     
     }
     $HttpResponse = $HttpContext.Response
     $HttpResponse.Headers.Add("Content-Type", "text/plain")
@@ -71,11 +73,12 @@ While ($HttpListener.IsListening) {
     $HttpResponse.Close()
     Write-Output " " # Newline
     
-    
-    # execute updateaction
-    Write-Output "Start updateaction" $((get-date).ToLocalTime()).ToString("yyyy-MM-dd HHmmss")
-    # & "$updateaction"
-    Write-Output "Ended updateaction" $((get-date).ToLocalTime()).ToString("yyyy-MM-dd HHmmss")
+    if ($filemodified) {
+        # execute updateaction
+        Write-Output "Start updateaction" $((get-date).ToLocalTime()).ToString("yyyy-MM-dd HHmmss")
+        # & "$updateaction"
+        Write-Output "Ended updateaction" $((get-date).ToLocalTime()).ToString("yyyy-MM-dd HHmmss")
+    }
     # $HttpListener.Stop()
     # uncomment incase you want to inspect varianbles
 }
