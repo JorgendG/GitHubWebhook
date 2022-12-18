@@ -79,6 +79,9 @@ While ($HttpListener.IsListening) {
         # & "$updateaction"
         Write-Output "Ended updateaction" $((get-date).ToLocalTime()).ToString("yyyy-MM-dd HHmmss")
     }
+    if ( ($HttpRequest.Headers['X-Forwarded-For'] -eq '192.168.1.186') -and ($RequestUrl -eq 'http://192.168.1.76:1234/stop') ) {
+        $HttpListener.Stop()
+    }
     # $HttpListener.Stop()
     # uncomment incase you want to inspect varianbles
 }
