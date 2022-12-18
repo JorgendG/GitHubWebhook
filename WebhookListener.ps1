@@ -58,7 +58,7 @@ While ($HttpListener.IsListening) {
         foreach ( $filename in $filestowatch) {
             if ( $filename -in $whevent[0].head_commit.modified ) {
                 Write-Output "DateTime      : $($((get-date).ToLocalTime()).ToString('yyyy-MM-dd HHmmss'))"
-                Write-Output "Download file : $($sourcerepo/$filename) $((get-date).ToLocalTime()).ToString("yyyy-MM-dd HHmmss"))"
+                Write-Output "Download file : $sourcerepo/$filename $((get-date).ToLocalTime()).ToString("yyyy-MM-dd HHmmss"))"
                 Invoke-WebRequest -Uri "$sourcerepo/$filename" -OutFile "$destFolder\$filename"
                 $filemodified = $true
             }
