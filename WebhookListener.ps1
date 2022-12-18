@@ -83,6 +83,6 @@ While ($HttpListener.IsListening) {
         $HttpListener.Stop()
     }
     # $HttpListener.Stop()
-    # uncomment incase you want to inspect varianbles
+    # uncomment in case you want to inspect varianbles
 }
 $HttpListener.Stop()
