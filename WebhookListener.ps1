@@ -24,6 +24,7 @@ function Install-WebhookService {
     }
 }
 
+Start-Transcript c:\pullserver\GitHubWebHooktransscipt.txt -Append
 Add-Type -AssemblyName System.Web
 
 $HttpListener = New-Object System.Net.HttpListener
